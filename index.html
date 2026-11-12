@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="copyright" content="blakestudio8" />
+    <title>Web momentos app</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+  </head>
+  <body>
+    <header class="navbar">
+      <div class="logo">
+        <i data-lucide="camera"></i>
+        <span>Groupy</span>
+      </div>
+      <button id="btn-privacidad" class="btn-icon" type="button" aria-label="Privacidad">
+        <i data-lucide="shield-check"></i>
+      </button>
+    </header>
+
+    <main class="content">
+      <section id="view-feed" class="view active">
+        <div class="header-sections">
+          <h2>Recuerdos recientes</h2>
+          <div class="group-select-wrapper">
+            <i data-lucide="users"></i>
+            <select id="select-grupo">
+              <option value="todos">Todos los grupos</option>
+              <option value="1">Los chavales</option>
+              <option value="2">Viaje Portugal</option>
+            </select>
+          </div>
+        </div>
+        <div id="posts-container" class="posts-grid"></div>
+      </section>
+
+      <section id="view-groups" class="view">
+        <h2>Mis Grupos</h2>
+        <div class="group-actions">
+          <button class="btn-primary" type="button" onclick="mostrarModalGrupo('crear')">
+            <i data-lucide="plus"></i> Crear grupo
+          </button>
+          <button class="btn-secondary" type="button" onclick="mostrarModalGrupo('unirse')">
+            <i data-lucide="key-round"></i> Unirme con código
+          </button>
+        </div>
+        <div id="lista-grupos" class="groups-list"></div>
+      </section>
+
+      <section id="view-recap" class="view">
+        <h2>Recap del Mes</h2>
+        <p class="subtitle">Revive los mejores momentos del mes con los que quieres</p>
+        <div class="recap-card">
+          <div class="recap-preview">
+            <i data-lucide="sparkles"></i>
+            <h3>Septiembre 2026</h3>
+            <p>12 momentos compartidos en 2 grupos</p>
+          </div>
+          <button class="btn-primary btn-large" type="button" onclick="iniciarRecap()">
+            <i data-lucide="play"></i> Reproducir Recap
+          </button>
+          <p id="recap-status" class="subtitle"></p>
+        </div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav">
+      <button class="nav-item active" type="button" onclick="cambiarVista('feed', this)">
+        <i data-lucide="image"></i>
+        <span>Muro</span>
+      </button>
+      <button class="nav-item" type="button" onclick="cambiarVista('groups', this)">
+        <i data-lucide="users"></i>
+        <span>Grupos</span>
+      </button>
+      <button class="nav-item add-btn" type="button" onclick="abrirModalSubir()">
+        <i data-lucide="plus"></i>
+      </button>
+      <button class="nav-item" type="button" onclick="cambiarVista('recap', this)">
+        <i data-lucide="sparkles"></i>
+        <span>Recap</span>
+      </button>
+    </nav>
+
+    <div id="modal-grupo" class="modal hidden" aria-hidden="true">
+      <div class="modal-content">
+        <h3>Crear grupo</h3>
+        <form>
+          <input type="hidden" id="grupo-mode" value="crear" />
+          <input type="text" placeholder="Nombre del grupo" aria-label="Nombre del grupo" />
+          <textarea rows="3" placeholder="Descripción del grupo" aria-label="Descripción del grupo"></textarea>
+          <div class="modal-actions">
+            <button class="btn-secondary" type="button" data-close-modal="grupo">Cancelar</button>
+            <button class="btn-primary" type="submit">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+<div id="modal-subir" class="modal hidden" aria-hidden="true">
+      <div class="modal-content">
+        <h3>Subir recuerdo</h3>
+        <form id="form-subir-recuerdo">
+          <!-- 1. Título del recuerdo -->
+          <input type="text" id="input-titulo" placeholder="Título del recuerdo" aria-label="Título del recuerdo" required />
+          <div class="form-grupo">
+            <label for="grupo-recuerdo">Selecciona el grupo</label>
+            <select id="grupo-recuerdo" name="grupo_id" required>
+              <option value="" disable selected>Elige un grupo...</option>
+              <option value="Los chavales">Los chavales</option>
+              <option value="Viaje Portugal">Viaje Portugal</option>
+            </select>
+          </div>
+          <!-- 2. CAMPO NUEVO: Añadir Foto (entre título y descripción) -->
+          <div class="input-file-container">
+            <label for="input-foto" class="btn-file-label">
+              <i data-lucide="image-plus"></i>
+              <span id="file-label-text">Seleccionar foto o vídeo</span>
+            </label>
+            <input type="file" id="input-foto" accept="image/*,video/*" class="file-input-hidden" />
+          </div>
+
+          <!-- 3. Descripción del momento -->
+          <textarea id="input-descripcion" rows="3" placeholder="Describe el momento..." aria-label="Describe el momento"></textarea>
+
+          <div class="modal-actions">
+            <button class="btn-secondary" type="button" data-close-modal="subir">Cancelar</button>
+            <button class="btn-primary" type="submit">Publicar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
